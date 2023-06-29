@@ -10,6 +10,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 if openai.api_key is None:
   print(colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
+  exit(0)
 else:
   print(colored('[SYSTEM]', 'grey'), colored('OPENAI_API_KEY found.', 'green'))
   print(colored('[SYSTEM]', 'grey'), colored('Chat dialogue will be saved to `chat.json`.', 'green'), '\n')
