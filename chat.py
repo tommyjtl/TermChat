@@ -12,8 +12,8 @@ if openai.api_key is None:
   print(colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
   exit(0)
 else:
-  print(colored('[SYSTEM]', 'grey'), colored('OPENAI_API_KEY found.', 'green'))
-  print(colored('[SYSTEM]', 'grey'), colored('Chat dialogue will be saved to `chat.json`.', 'green'), '\n')
+  print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
+  print('[SYSTEM]', colored('Chat dialogue will be saved to `chat.json`.', 'green'), '\n')
 
 initial_msgs = [{"role": "system", "content": "You are a helpful assistant."}]
 chat_datetime = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -22,7 +22,7 @@ console = Console()
 try:
   while True:
     # Prompt for user input
-    user_input = input(colored('Enter your message >> ', 'grey'))
+    user_input = input(colored('Enter your message >> ', 'yellow'))
     
     # Append user input to the list of messages to the previous messages
     initial_msgs.append({"role": "user", "content": user_input})
