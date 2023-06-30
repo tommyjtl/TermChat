@@ -1,5 +1,7 @@
 # TermChat
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Chatting with GPT in the terminal. Just a toy experiment with OpenAI's GPT API.
 
 > All code have only tested on macOS, not guaranteed to work on other platforms.
@@ -28,3 +30,7 @@ python pdf.py -f <file>
 ```
 
 [![asciicast](https://asciinema.org/a/8EdULKTLvgi1nFlYRmS7zMl5U.svg)](https://asciinema.org/a/8EdULKTLvgi1nFlYRmS7zMl5U)
+
+## Acknowledgments
+
+- [QueryGPT](https://github.com/tsensei/QueryGPT)

@@ -14,16 +14,6 @@ from argparse import ArgumentParser
 # Clear the terminal
 clearTerminal()
 
-check_api_key = os.getenv("OPENAI_API_KEY")
-if check_api_key is None:
-  print(colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
-  exit(0)
-else:
-  print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
-
-# Initialize the console for displaying spinner status
-console = Console()
-
 #      _                  
 #     / \   _ __ __ _ ___ 
 #    / _ \ | '__/ _` / __|
@@ -42,6 +32,16 @@ parser.add_argument("--ocr",
                     default=False,
                     help="Specify whether to OCR the PDF file.")
 args = parser.parse_args()
+
+check_api_key = os.getenv("OPENAI_API_KEY")
+if check_api_key is None:
+  print(colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
+  exit(0)
+else:
+  print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
+
+# Initialize the console for displaying spinner status
+console = Console()
 
 # check if file exists
 if not os.path.isfile(args.file_path):
