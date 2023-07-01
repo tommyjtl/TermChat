@@ -24,12 +24,15 @@ brew install tesseract-lang
 
 ## Running
 
+### Chat with GPT
+
 ```bash
 python chat.py
 ```
 
 [![asciicast](https://asciinema.org/a/Ewv7HoFCBc1s2RrulEQ2ou3SC.svg)](https://asciinema.org/a/Ewv7HoFCBc1s2RrulEQ2ou3SC)
 
+### Chat with PDF
 
 ```bash
 # Normal usage
