@@ -30,7 +30,7 @@ brew install tesseract-lang
 python chat.py
 ```
 
-[![asciicast](https://asciinema.org/a/amyZInWNZUPpljB8SaQoKW6TW.svg)](https://asciinema.org/a/amyZInWNZUPpljB8SaQoKW6TW)
+[![asciicast](https://asciinema.org/a/ruGjI8xcULRAOMndOq0wHAl7x.svg)](https://asciinema.org/a/ruGjI8xcULRAOMndOq0wHAl7x)
 
 ### Chat with PDF
 
