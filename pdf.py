@@ -31,6 +31,10 @@ parser.add_argument("--ocr",
                     action="store_true",
                     default=False,
                     help="Specify whether to OCR the PDF file.")
+parser.add_argument("--ocr-lang",
+                    dest="ocr_lang",
+                    default="eng",
+                    help="Specify the language for OCR. Default: eng")
 args = parser.parse_args()
 
 check_api_key = os.getenv("OPENAI_API_KEY")
@@ -83,7 +87,7 @@ if args.need_ocr and need_generate_embeddings is True:
   print('[SYSTEM]', colored('Starting to OCR the file.', 'green'))
   with console.status(colored('OCR-ing the PDF file...','green')) as status:
     directory, filename = os.path.split(args.file_path)
-    ocr = OCR(args.file_path)
+    ocr = OCR(args.file_path, args.ocr_lang)
     ocr.extract()
     
     ocr_output_path = "./temp/" + filename.split(".")[0] + ".pdf"

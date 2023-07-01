@@ -13,10 +13,11 @@ class OCR:
     "jpg2pdf": ""
   }
   
-  def __init__(self, source_path):
+  def __init__(self, source_path, ocr_lang):
     self.source_path = source_path
     self.directory, self.filename = os.path.split(source_path)
     self.ocr_output_path = "./temp/" + self.filename.split(".")[0] + ".pdf"
+    self.ocr_lang = ocr_lang
     
     self.commands['pdf2jpg'] = "pdftoppm -jpeg " + source_path + " temp/" + self.filename.split(".")[0] + "/"
     self.commands['jpg2pdf'] = "convert temp/" + self.filename.split(".")[0] + "/*.jpg temp/" + self.filename.split(".")[0] + "_tmp.pdf"
@@ -46,6 +47,7 @@ class OCR:
       ocrmypdf.ocr("./temp/" + self.filename.split(".")[0] + "_tmp.pdf", 
                    "./temp/" + self.filename.split(".")[0] + ".pdf",
                    output_type="pdf",
+                   language=self.ocr_lang
                    #  force_ocr=True
       )
       
