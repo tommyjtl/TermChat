@@ -1,8 +1,10 @@
 import os
 import json
 from datetime import datetime
-from termcolor import colored
+from termcolor import colored, cprint
 from rich.console import Console
+from rich import print as rprint
+import sys
 
 import openai
 from utils import clearTerminal
@@ -17,6 +19,7 @@ if openai.api_key is None:
 else:
   print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
   print('[SYSTEM]', colored('Chat dialogue will be saved to `chat.json`.', 'green'))
+  print('[SYSTEM]', colored('<Press Ctrl+C to exit>', 'green'))
   
 if not os.path.isdir("history"):
     print("Directory does not exist.")
@@ -30,32 +33,37 @@ def main():
   try:
     while True:
       # Prompt for user input
-      print(colored('<Press Ctrl+C to exit>', 'dark_grey'))
       user_input = input(colored('Enter your message: ', 'yellow'))
       
       # Append user input to the list of messages to the previous messages
       initial_msgs.append({"role": "user", "content": user_input})
 
       # Display indicator that the program is waiting for GPT-3
-      with console.status(colored('Waiting for GPT...','green')) as status:
-        # Retrieve the response from the API
-        completion = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
-          messages=initial_msgs
-        )
-      
+      # with console.status(colored('Waiting for GPT...','green')) as status:
+      # Retrieve the response from the API
+      current_msg = ""
+      for chunk in openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=initial_msgs,
+        stream=True,
+      ):
+        content = chunk["choices"][0].get("delta", {}).get("content")
+        if content is not None:
+          current_msg += content
+          # clearTerminal()
+          cprint(content, 'green', end='', flush=True)
+
       # Append assistant response to the list of messages
-      initial_msgs.append({"role": "assistant", "content": completion.choices[0].message.content})
+      initial_msgs.append({"role": "assistant", "content": current_msg})
       
-      # Print the assistant response
-      print(colored(completion.choices[0].message.content, 'green'))
+      print()
       
       with open('history/chat_history-' + str(chat_datetime) + '.json', 'w') as f:
         f.writelines(json.dumps(initial_msgs, indent=2))
       
   except KeyboardInterrupt:
     # Exit the program if the user presses Ctrl+C
-    print('\n[SYSTEM]', colored("\nBye!", 'green'))
+    print('\n[SYSTEM]', colored("Bye!", 'green'))
     exit(0)
   except Exception as e:
     # Print the exception and exit the program

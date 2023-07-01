@@ -39,6 +39,7 @@ if check_api_key is None:
   exit(0)
 else:
   print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
+  print('[SYSTEM]', colored('<Press Ctrl+C to exit>', 'green'))
 
 # Initialize the console for displaying spinner status
 console = Console()
@@ -66,15 +67,10 @@ pdfUtils = PDF()
 # check if the extracted txt file exists
 
 directory, filename = os.path.split(args.file_path)
-need_generate_embeddings = False
 
+need_generate_embeddings = False
 if not os.path.isfile("./temp/" + filename.split(".")[0] + "_extracted_embeddings.json"):
-  # print('[SYSTEM]', colored("Embeddings not found. Generating embeddings from extracted text.", 'green'))
-  # pdfUtils.generateEmbeddingsFromFile("./temp/" + filename.split(".")[0] + "_extracted.txt")
   need_generate_embeddings = True
-# else:
-  # print('[SYSTEM]', colored("Embeddings found. Loading the existing embeddings.", 'green'))
-  # pdfUtils.loadEmbeddingsFromFile("./temp/" + filename.split(".")[0] + "_extracted_embeddings.json")
     
 #   ____  ____  _____    ___   ____ ____  
 #  |  _ \|  _ \|  ___|  / _ \ / ___|  _ \ 
@@ -124,7 +120,6 @@ else:
 def main():
   try:
     while True:
-      print(colored('<Press Ctrl+C to exit>', 'dark_grey'))
       question = input(colored('Enter your question: ', 'yellow'))
       question_embeddings = pdfUtils.generateEmbeddingsFromText(question)['embeddings']
       
