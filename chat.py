@@ -8,24 +8,66 @@ import sys
 
 import openai
 from utils import clearTerminal
+from argparse import ArgumentParser
 
 # Clear the terminal
 clearTerminal()
 
+#      _                  
+#     / \   _ __ __ _ ___ 
+#    / _ \ | '__/ _` / __|
+#   / ___ \| | | (_| \__ \
+#  /_/   \_\_|  \__, |___/
+#               |___/     
+# Initialize the argument parser
+parser = ArgumentParser()
+parser.add_argument("-c", "--load-character", 
+                    dest="character_file",
+                    help="Specify a character file location.")
+args = parser.parse_args()
+
+character = {
+  "name": "Default Assistant",
+  "system": "You are a helpful assistant.",
+  "temperature": 0,
+}
+
+if args.character_file is not None:
+  # check if the character profile exists
+  if not os.path.isfile(args.character_file):
+    print('[SYSTEM]', colored(f"The file path you specified does not exist: `{args.character_file}`", 'red'))
+    exit(0)
+    
+  # check if the character's prompt exists
+  if not os.path.isfile(args.character_file.replace('.json', '.txt')):
+    print('[SYSTEM]', colored(f"The file path you specified does not exist: `{args.character_file}`", 'red'))
+    exit(0)
+  
+  # load the character profile
+  with open(args.character_file) as f:
+    character_profile = json.load(f)
+    character['name'] = character_profile['name']
+    character['temperature'] = character_profile['temperature']
+    
+  # load the character's prompt
+  with open(args.character_file.replace('.json', '.txt')) as f:
+    character['system'] = ''.join(f.read())
+
+# Checking OPENAI_API_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if openai.api_key is None:
-  print(colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
+  print('[SYSTEM]', colored('OPENAI_API_KEY is not set as a system environment variable', 'red'))
   exit(0)
 else:
-  print('[SYSTEM]', colored('OPENAI_API_KEY found.', 'green'))
-  print('[SYSTEM]', colored('Chat dialogue will be saved to `chat.json`.', 'green'))
+  print('[SYSTEM]', colored(f"{character['name']} is ready now.", 'green'))
+  print('[SYSTEM]', colored('Chat dialogue will be saved to `history/`', 'green'))
   print('[SYSTEM]', colored('<Press Ctrl+C to exit>', 'green'))
   
 if not os.path.isdir("history"):
     print("Directory does not exist.")
     os.mkdir("history")
 
-initial_msgs = [{"role": "system", "content": "You are a helpful assistant."}]
+initial_msgs = [{"role": "system", "content": character['system']}]
 chat_datetime = datetime.now().strftime("%Y%m%d-%H%M%S")
 console = Console()
 
@@ -45,6 +87,7 @@ def main():
       for chunk in openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=initial_msgs,
+        temperature=character['temperature'],
         stream=True,
       ):
         content = chunk["choices"][0].get("delta", {}).get("content")
