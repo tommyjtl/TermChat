@@ -36,8 +36,6 @@ class Chat:
     'hal9000': 'characters/hal9000.json'
   }
   
-  def __init__(self):
-  
   def checkCharacterLoad(self, character_file):
     if character_file in self.character_presets:
       character_file = self.character_presets[character_file]
