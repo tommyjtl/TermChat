@@ -8,6 +8,7 @@ from rich import print as rprint
 from rich.panel import Panel
 from rich.text import Text
 from rich.live import Live
+import time
 
 import openai
 from argparse import ArgumentParser
@@ -41,6 +42,11 @@ def main():
                       dest="engine_type",
                       default="gpt-3.5-turbo",
                       help="Specify an engine type, default is `gpt-3.5-turbo`.")
+  parser.add_argument("--tts",
+                      dest="enable_tts",
+                      default=False,
+                      action="store_true",
+                      help="Enable text-to-speech.")
   args = parser.parse_args()
 
   #    ____ _           _   
@@ -59,7 +65,7 @@ def main():
   chat.welcome(engine_type=args.engine_type)
 
   messages = chat.getInitialMessage()
-  chat_datetime = datetime.now().strftime("%Y%m%d-%H%M%S")
+  chat_datetime = datetime.now().strftime("%Y%m%d-%H%M%S")    
   
   try:
     while True:
@@ -108,6 +114,13 @@ def main():
           border_style="green bold",
           style="green",
         ))   
+        
+        if args.enable_tts:
+          # chat.say(result.choices[0].message.content, "Rocko (English (US))")
+          # print(character['voice'])
+          chat.say(result.choices[0].message.content, character['voice'])
+          # chat.say(result.choices[0].message.content, "Alex")
+          
         messages.append({"role": "assistant", "content": result.choices[0].message.content})
       
       with open('history/chat_history-' + str(chat_datetime) + '.json', 'w') as f:

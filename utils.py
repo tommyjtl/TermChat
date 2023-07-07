@@ -31,6 +31,7 @@ class Chat:
     "name": "Default Assistant", # default name
     "system": "You are a helpful assistant.",
     "temperature": 0,
+    "voice": "Evan (Enhanced)"
   }
   
   character_presets = {
@@ -126,6 +127,7 @@ class Chat:
       character_profile = json.load(f)
       self.character['name'] = character_profile['name']
       self.character['temperature'] = character_profile['temperature']
+      self.character['voice'] = character_profile['voice']
       
     # load the character's prompt
     with open(character_file.replace('.json', '.txt')) as f:
@@ -179,6 +181,49 @@ class Chat:
         border_style="red bold",
         style="red",
     ))
+    
+  def say(self, message, voice='Samantha'):
+    # say -v \? | more
+    stdout, stderr = self.exec("say " + "-v \"" + voice + "\" \"" + message + "\"")
+    
+  def exec(self, command):
+    # Execute the command and capture the output
+    process = subprocess.Popen(command, 
+      shell=True, 
+      stdout=subprocess.PIPE, 
+      stderr=subprocess.PIPE, 
+      text=True
+    )
+    
+    stdout = ''
+    stderr = ''
+    
+    try:
+      # Continuously read the output
+      while True:
+          # Read the output
+        output = process.stdout.readline()
+        errorp = process.stderr.readline()
+        
+        # Check if the output is empty and the process has finished
+        if process.poll() is not None:
+          break
+        
+        # Append the output to stdout
+        if output:
+          # print(output.strip())
+          stdout += output.strip() + '\n'
+          stderr += errorp.strip() + '\n'
+    except KeyboardInterrupt:
+      # print("KeyboardInterrupt")
+      process.terminate()
+    
+    # Capture the remaining output and error (if any)
+    stdout_remainder, stderr_remainder = process.communicate()
+    stdout += stdout_remainder
+    stderr += stderr_remainder
+    
+    return stdout, stderr
 
 class OCR:
   commands = {

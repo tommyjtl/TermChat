@@ -1,4 +1,5 @@
 { 
   "name": "HAL 9000",
-  "temperature": 0.2
+  "temperature": 0.2,
+  "voice": "Grandpa (English (US))"
 }
