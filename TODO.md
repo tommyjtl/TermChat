@@ -9,6 +9,7 @@
 Enter your message: what spaceship are we in?
 That model is currently overloaded with other requests. You can retry your request, or contact us through our help center at help.openai.com if the error persists. (Please include the request ID 68e572a183a8f9b1ab105972ff859e46 in your message.) (Error occurred while streaming.)
 ```
+- [ ] copy latest answer to clipboard
 - [ ] Add character customization to `chat.py`
   - Extract information from article/episode digest
   - Incorporate embedding comparison for the closest match in the given context

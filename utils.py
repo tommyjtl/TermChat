@@ -5,6 +5,7 @@ import os
 import subprocess
 import shutil
 import ocrmypdf
+import glob
 
 from termcolor import colored, cprint
 from rich.console import Console
@@ -27,16 +28,83 @@ class bcolors:
 
 class Chat:
   character = {
-    "name": "Default Assistant",
+    "name": "Default Assistant", # default name
     "system": "You are a helpful assistant.",
     "temperature": 0,
   }
   
   character_presets = {
-    'hal9000': 'characters/hal9000.json'
+    # 'hal9000': 'characters/hal9000.json'
   }
   
-  def checkCharacterLoad(self, character_file):
+  user_home = os.path.expanduser("~")
+  config_file_path = None
+  config_character_path = None
+  default_config = None
+  
+  def __init__(self):
+    self.config_character_path = self.user_home + "/.config/termchat/characters"
+    
+    self.generateConfig()
+    self.updateCharacterPresets()
+    
+    # load the character presets
+    json_files = glob.glob(self.config_character_path + '/*.json')
+    for file in json_files:
+      self.character_presets[file.split("/")[-1].split(".")[0]] = file
+  
+  def generateConfig(self):
+    with open("config.json", "r") as f:
+      self.default_config = json.load(f)
+    
+    if not os.path.exists(self.user_home + "/.config"):
+      os.mkdir(self.user_home + "/.config")
+    
+    if not os.path.exists(self.user_home + "/.config/termchat"):
+      os.mkdir(self.user_home + "/.config/termchat")
+      
+    if not os.path.exists(self.user_home + "/.config/termchat/characters"):
+      os.mkdir(self.user_home + "/.config/termchat/characters")
+    
+    self.config_file_path = self.user_home + "/.config/termchat/config.json"
+    
+    if os.path.isfile(self.config_file_path):
+      config = None
+      with open(self.config_file_path) as f:
+        config = json.load(f)   
+      if 'version' not in config:
+        # update config file to the latest version
+        with open(self.config_file_path, "w") as f:
+          json.dump(self.default_config, f, indent=2)
+        
+      if config['version'] < self.default_config['version']:
+        # update config file to the latest version
+        with open(self.config_file_path, "w") as f:
+          json.dump(self.default_config, f, indent=2)
+    else:
+      # create config file
+      with open(self.config_file_path, "w") as f:
+        json.dump(self.default_config, f, indent=2)
+        
+  def copy_files(self, source_dir, destination_dir):
+    # Get the list of files in the source directory
+    files = os.listdir(source_dir)
+
+    # Iterate over each file and copy it to the destination directory
+    for file_name in files:
+      source_file = os.path.join(source_dir, file_name)
+      destination_file = os.path.join(destination_dir, file_name)
+      shutil.copy2(source_file, destination_file)
+      
+  def updateCharacterPresets(self):
+    # remove the existing character presets
+    if os.path.exists(self.config_character_path):
+      shutil.rmtree(self.config_character_path)
+      os.mkdir(self.config_character_path)
+      
+    self.copy_files("./characters", self.config_character_path)
+  
+  def loadCharacters(self, character_file):
     if character_file in self.character_presets:
       character_file = self.character_presets[character_file]
     
@@ -66,7 +134,7 @@ class Chat:
   def getInitialMessage(self):
     return [{"role": "system", "content": self.character['system']}]
   
-  def welcome(self):
+  def welcome(self, engine_type):
     # Checking OPENAI_API_KEY
     openai.api_key = os.getenv("OPENAI_API_KEY")
     if openai.api_key is None:
@@ -83,6 +151,7 @@ class Chat:
       exit(0)
     
     welcome_msg = [
+      # f"[SYSTEM] Using `{engine_type}`",
       f"[SYSTEM] {self.character['name']} is ready to chat.",
       "[SYSTEM] Chat dialogue will be saved to `history/`",
       "[SYSTEM] <Press Ctrl+C to exit>"

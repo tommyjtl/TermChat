@@ -32,6 +32,15 @@ def main():
   parser.add_argument("-c", "--load-character", 
                       dest="character_file",
                       help="Specify a character file location.")
+  parser.add_argument("--stream",
+                      dest="steaming_mode",
+                      default=False,
+                      action="store_true",
+                      help="Enable streaming mode.")
+  parser.add_argument("-e", "--load-engine", 
+                      dest="engine_type",
+                      default="gpt-3.5-turbo",
+                      help="Specify an engine type, default is `gpt-3.5-turbo`.")
   args = parser.parse_args()
 
   #    ____ _           _   
@@ -44,10 +53,10 @@ def main():
   chat = Chat()
 
   if args.character_file is not None:
-    chat.checkCharacterLoad(args.character_file)
+    chat.loadCharacters(args.character_file)
   character = chat.character
   
-  chat.welcome()
+  chat.welcome(engine_type=args.engine_type)
 
   messages = chat.getInitialMessage()
   chat_datetime = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -68,38 +77,38 @@ def main():
       # Append user input to the list of messages to the previous messages
       messages.append({"role": "user", "content": user_input})
       
-      # current_msg = ""
-      # for chunk in openai.ChatCompletion.create(
-      #   model="gpt-3.5-turbo",
-      #   # model="gpt-4",
-      #   messages=messages,
-      #   temperature=character['temperature'],
-      #   stream=True,
-      # ):
-      #   content = chunk["choices"][0].get("delta", {}).get("content")
-      #   if content is not None:
-      #     current_msg += content
-      #     cprint(content, 'light_green', end='', flush=True)
-
-      # # Append assistant response to the list of messages
-      # messages.append({"role": "assistant", "content": current_msg})
-      # print()
-      
-      status = console.status(f"Waiting for {character['name']}...", spinner="bouncingBar")
-      with Live(Panel(status, border_style="green bold", style="green"), refresh_per_second=4, transient=True):
-        result = openai.ChatCompletion.create(
+      if args.steaming_mode:
+        current_msg = ""
+        for chunk in openai.ChatCompletion.create(
           model="gpt-3.5-turbo",
+          # model="gpt-4",
           messages=messages,
-          temperature=character['temperature']
-        )
-      status.stop()
-      
-      rprint(Panel(result.choices[0].message.content, title=character['name'], 
-        border_style="green bold",
-        style="light_green",
-      ))
-      
-      messages.append({"role": "assistant", "content": result.choices[0].message.content})
+          temperature=character['temperature'],
+          stream=True,
+        ):
+          content = chunk["choices"][0].get("delta", {}).get("content")
+          if content is not None:
+            current_msg += content
+            cprint(content, 'light_green', end='', flush=True)
+
+        # Append assistant response to the list of messages
+        messages.append({"role": "assistant", "content": current_msg})
+        print()
+      else:
+        status = console.status(f"Waiting for {character['name']}...", spinner="bouncingBar")
+        with Live(Panel(status, border_style="green bold", style="green"), refresh_per_second=4, transient=True):
+          result = openai.ChatCompletion.create(
+            model=args.engine_type,
+            messages=messages,
+            temperature=character['temperature']
+          )
+        status.stop()
+        
+        rprint(Panel(result.choices[0].message.content, title=character['name'], 
+          border_style="green bold",
+          style="green",
+        ))   
+        messages.append({"role": "assistant", "content": result.choices[0].message.content})
       
       with open('history/chat_history-' + str(chat_datetime) + '.json', 'w') as f:
         f.writelines(json.dumps(messages, indent=2))
