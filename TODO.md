@@ -2,6 +2,7 @@
 
 ## Level 1
 
+- [ ] Setup a `~/.config/termchat/` directory for storing character presets
 - [ ] Add error exception when model API is not responding
   - retry with same previous chat context
 ```text
