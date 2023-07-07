@@ -5,7 +5,111 @@ import os
 import subprocess
 import shutil
 import ocrmypdf
-from termcolor import colored
+
+from termcolor import colored, cprint
+from rich.console import Console
+from rich import print as rprint
+from rich.panel import Panel
+from rich.text import Text
+from rich.table import Table
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WHITE = '\33[97m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+class Chat:
+  character = {
+    "name": "Default Assistant",
+    "system": "You are a helpful assistant.",
+    "temperature": 0,
+  }
+  
+  character_presets = {
+    'hal9000': 'characters/hal9000.json'
+  }
+  
+  def checkCharacterLoad(self, character_file):
+    if character_file in self.character_presets:
+      character_file = self.character_presets[character_file]
+    
+    # check if the character profile exists
+    if not os.path.isfile(character_file) or not os.path.isfile(character_file.replace('.json', '.txt')):
+      error_msg = [
+        f"The preset file path you specified does not exist: `{character_file}`"
+      ]
+      rprint(
+        Panel('\n'.join(error_msg),
+          title="TermChat",
+          border_style="red bold",
+          style="red",
+      ))
+      exit(0)
+    
+    # load the character profile
+    with open(character_file) as f:
+      character_profile = json.load(f)
+      self.character['name'] = character_profile['name']
+      self.character['temperature'] = character_profile['temperature']
+      
+    # load the character's prompt
+    with open(character_file.replace('.json', '.txt')) as f:
+      self.character['system'] = ''.join(f.read())
+        
+  def getInitialMessage(self):
+    return [{"role": "system", "content": self.character['system']}]
+  
+  def welcome(self):
+    # Checking OPENAI_API_KEY
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    if openai.api_key is None:
+      error_msg = [
+        "OPENAI_API_KEY is not set as a system environment variable"
+      ]
+      rprint(
+        Panel('\n'.join(error_msg),
+          title="TermChat",
+          border_style="red bold",
+          style="red",
+          # subtitle="Thank you"
+      ))
+      exit(0)
+    
+    welcome_msg = [
+      f"[SYSTEM] {self.character['name']} is ready to chat.",
+      "[SYSTEM] Chat dialogue will be saved to `history/`",
+      "[SYSTEM] <Press Ctrl+C to exit>"
+    ]
+    rprint(
+      Panel('\n'.join(welcome_msg),
+        title="TermChat",
+        border_style="white bold",
+        style="white",
+        # subtitle="Thank you"
+    ))
+
+    if not os.path.isdir("history"):
+        print("Directory does not exist.")
+        os.mkdir("history")
+    
+  def showGoodbyeMessage(self):
+    goodbye_msg = [
+      "Bye",
+    ]
+    print()
+    rprint(
+      Panel('\n'.join(goodbye_msg),
+        title="TermChat",
+        border_style="red bold",
+        style="red",
+    ))
 
 class OCR:
   commands = {
@@ -231,7 +335,8 @@ class PDF:
   def generateAnswers(self, prompt, closestParagraphs):
     try:
       completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        # model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
           {
             "role": "user",
