@@ -26,7 +26,7 @@ brew install tesseract-lang
 
 ## Running
 
-```shell
+```bash
 Usage: python script.py [OPTIONS]
 
 Options:
@@ -49,7 +49,7 @@ python chat.py
 <details>
   <summary> 🎬 Example usage </summary>
 
-<video src="./docs/chat1.mp4" controls="controls" style="max-width: 730px;">
+<video src="" controls="controls" style="max-width: 730px;">
 </video>
 
 </details>
