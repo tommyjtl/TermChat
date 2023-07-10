@@ -49,8 +49,7 @@ python chat.py
 <details>
   <summary> 🎬 Example usage </summary>
 
-<video src="" controls="controls" style="max-width: 730px;">
-</video>
+https://raw.githubusercontent.com/tommyjtl/termchat/main/.github/images/chat1.mp4
 
 </details>
 
