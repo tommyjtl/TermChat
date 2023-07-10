@@ -48,9 +48,7 @@ python chat.py
 
 <details>
   <summary> 🎬 Example usage </summary>
-
 https://github.com/tommyjtl/termchat/assets/1622557/fb5d111b-42fb-4899-aeb6-c97202847a6f
-
 </details>
 
 #### Specifiy a personality
@@ -59,10 +57,10 @@ https://github.com/tommyjtl/termchat/assets/1622557/fb5d111b-42fb-4899-aeb6-c972
 python chat.py -c <character>
 ```
 
-<video controls>
-  <source src="./docs/chat2.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<details>
+  <summary> 🎬 Example usage </summary>
+https://github.com/tommyjtl/termchat/assets/1622557/9d4ae7d7-d62b-4e28-b428-6b676d3780aa
+</details>
 
 ### Chat with PDF
 
