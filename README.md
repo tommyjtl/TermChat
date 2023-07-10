@@ -49,9 +49,8 @@ python chat.py
 <details>
   <summary> 🎬 Example usage </summary>
 
-![](./docs/chat1.mp4)
-
-
+<video src="./docs/chat1.mp4" controls="controls" style="max-width: 730px;">
+</video>
 
 </details>
 
