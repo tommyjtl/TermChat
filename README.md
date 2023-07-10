@@ -49,7 +49,7 @@ python chat.py
 <details>
   <summary> 🎬 Example usage </summary>
 
-https://raw.githubusercontent.com/tommyjtl/termchat/main/.github/images/chat1.mp4
+https://github.com/tommyjtl/termchat/assets/1622557/fb5d111b-42fb-4899-aeb6-c97202847a6f
 
 </details>
 
