@@ -48,10 +48,10 @@ python chat.py
 
 <details>
   <summary> 🎬 Example usage </summary>
-  <hr>
-
-https://raw.githubusercontent.com/tommyjtl/termchat/main/docs/chat1.mp4
-
+  <video controls>
+    <source src="./docs/chat1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </details>
 
 #### Specifiy a personality
