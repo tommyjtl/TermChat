@@ -46,7 +46,10 @@ Options:
 python chat.py
 ```
 
-[![asciicast](https://asciinema.org/a/k2o3NZ0SoedZmhyJbukwSxltT.svg)](https://asciinema.org/a/k2o3NZ0SoedZmhyJbukwSxltT)
+<video controls>
+  <source src="./docs/chat1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 #### Specifiy a personality
 
@@ -54,7 +57,10 @@ python chat.py
 python chat.py -c <character>
 ```
 
-[![asciicast](https://asciinema.org/a/B5WwLcEBatoW8hLSVEM65ZkXf.svg)](https://asciinema.org/a/B5WwLcEBatoW8hLSVEM65ZkXf)
+<video controls>
+  <source src="./docs/chat2.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### Chat with PDF
 
