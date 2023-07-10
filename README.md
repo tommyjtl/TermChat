@@ -50,7 +50,7 @@ python chat.py
   <summary> 🎬 Example usage </summary>
   <hr>
 
-./docs/chat1.mp4
+https://raw.githubusercontent.com/tommyjtl/termchat/main/docs/chat1.mp4
 
 </details>
 
