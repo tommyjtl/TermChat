@@ -48,7 +48,9 @@ python chat.py
 
 <details>
   <summary> 🎬 Example usage </summary>
+
 https://github.com/tommyjtl/termchat/assets/1622557/fb5d111b-42fb-4899-aeb6-c97202847a6f
+
 </details>
 
 #### Specifiy a personality
@@ -59,7 +61,9 @@ python chat.py -c <character>
 
 <details>
   <summary> 🎬 Example usage </summary>
+
 https://github.com/tommyjtl/termchat/assets/1622557/9d4ae7d7-d62b-4e28-b428-6b676d3780aa
+
 </details>
 
 ### Chat with PDF
@@ -78,7 +82,9 @@ python pdf.py -f <file> --ocr --ocr-lang <lang>
 
 <details>
   <summary> 🎬 Example usage </summary>
+
 https://github.com/tommyjtl/termchat/assets/1622557/40162508-3263-406b-bb7e-27558ae8d618
+
 </details>
 
 ## Acknowledgments
