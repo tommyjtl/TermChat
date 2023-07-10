@@ -76,7 +76,10 @@ python pdf.py -f <file> --ocr
 python pdf.py -f <file> --ocr --ocr-lang <lang>
 ```
 
-[![asciicast](https://asciinema.org/a/8EdULKTLvgi1nFlYRmS7zMl5U.svg)](https://asciinema.org/a/8EdULKTLvgi1nFlYRmS7zMl5U)
+<details>
+  <summary> 🎬 Example usage </summary>
+https://github.com/tommyjtl/termchat/assets/1622557/40162508-3263-406b-bb7e-27558ae8d618
+</details>
 
 ## Acknowledgments
 
