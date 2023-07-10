@@ -48,10 +48,11 @@ python chat.py
 
 <details>
   <summary> 🎬 Example usage </summary>
-  <video controls>
-    <source src="./docs/chat1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+
+![](./docs/chat1.mp4)
+
+
+
 </details>
 
 #### Specifiy a personality
