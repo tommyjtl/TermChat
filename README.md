@@ -13,6 +13,8 @@ export OPENAI_API_KEY=<your key>
 ```
 
 ```bash
+python -m termchat-venv
+source termchat-venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -24,13 +26,35 @@ brew install tesseract-lang
 
 ## Running
 
+```shell
+Usage: python script.py [OPTIONS]
+
+Options:
+  -c, --load-character FILE     Specify a character file location.
+  --stream                      Enable streaming mode.
+  -e, --load-engine TYPE        Specify an engine type, default is `gpt-3.5-turbo`.
+  --tts                         Enable text-to-speech.
+  -q, --question                Ask a question to the chatbot and get an answer directly.
+  --help                        Show this message and exit.
+```
+
 ### Chat with GPT
+
+#### Default Assistant
 
 ```bash
 python chat.py
 ```
 
-[![asciicast](https://asciinema.org/a/ruGjI8xcULRAOMndOq0wHAl7x.svg)](https://asciinema.org/a/ruGjI8xcULRAOMndOq0wHAl7x)
+[![asciicast](https://asciinema.org/a/k2o3NZ0SoedZmhyJbukwSxltT.svg)](https://asciinema.org/a/k2o3NZ0SoedZmhyJbukwSxltT)
+
+#### Specifiy a personality
+
+```bash
+python chat.py -c <character>
+```
+
+[![asciicast](https://asciinema.org/a/B5WwLcEBatoW8hLSVEM65ZkXf.svg)](https://asciinema.org/a/B5WwLcEBatoW8hLSVEM65ZkXf)
 
 ### Chat with PDF
 

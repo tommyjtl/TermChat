@@ -2,6 +2,16 @@
 
 ## Level 1
 
+- [ ] Add `-q` option to ask an immediate question and get the answer
+  - [ ] Parse the code, allow user to select which code snippet to use
+
+- [ ] press `shift` to erase current input
+- [x] copy the answer to clipboard
+- [ ] interrupt a unresponsive request
+- [ ] interrupt a too long response
+- [ ] Add examples use cases
+- [ ] Add Markdown support for terminal displaying
+
 - [ ] Setup a `~/.config/termchat/` directory for storing character presets
 - [ ] Add error exception when model API is not responding
   - retry with same previous chat context

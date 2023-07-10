@@ -163,4 +163,5 @@ history/
 temp/
 .DS_Store
 
+termchat-venv/
 venv/
