@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Lightweight GPT chat client in the terminal. A toy experiment with OpenAI's GPT API.
+A minimal GPT chat client in the terminal. A toy experiment with OpenAI's GPT API.
 
 > All code have only tested on macOS, not guaranteed to work on other platforms.
 
