@@ -1,6 +1,7 @@
 # TermChat
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
 A minimal GPT chat client in the terminal. A toy experiment with OpenAI's GPT API.
 
