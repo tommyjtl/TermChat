@@ -2,6 +2,8 @@
 
 ## Level 1
 
+- fix `This model's maximum context length is 4097 tokens. However, your messages resulted in 4107 tokens. Please reduce the length of the messages.`
+
 - [ ] Add `-q` option to ask an immediate question and get the answer
   - [ ] Parse the code, allow user to select which code snippet to use
 

@@ -1,4 +1,4 @@
-openai>=0.27.8
+openai==0.27.8
 termcolor>=2.3.0
 rich>=13.4.2
 PyMuPDF>=1.22.3
