@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 import pyperclip
+import readline
 
 from termcolor import colored, cprint
 from rich.console import Console
